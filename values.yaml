@@ -577,7 +577,7 @@ postgresql:
 
   persistence:
     enabled: true
-    size: 2Gi
+    size: 512Mi
     # Storage class for PostgreSQL PVC
     # Leave empty to use default storage class
     storageClass: ""
@@ -653,7 +653,7 @@ redis:
 
   persistence:
     enabled: true
-    size: 8Gi
+    size: 256Mi
     # Storage class for Redis PVC
     # Leave empty to use default storage class
     storageClass: ""

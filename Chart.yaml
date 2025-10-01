@@ -3,7 +3,7 @@ name: packmind
 description: Packmind AI - Trust AI Agents at scale
 type: application
 version: 1.0.0
-appVersion: "latest"
+appVersion: 1.1.0
 home: https://packmind.com
 sources:
   -  https://github.com/PackmindHub/packmind-ai-helm-chart
