@@ -35,14 +35,14 @@ jobs:
     - name: Run chart-testing (list-changed)
       id: list-changed
       run: |
-        changed=$(ct list-changed --charts-dir . --target-branch ${{ github.event.repository.default_branch }})
+        changed=$(ct list-changed --chart-dirs . --target-branch ${{ github.event.repository.default_branch }})
         if [[ -n "$changed" ]]; then
           echo "changed=true" >> "$GITHUB_OUTPUT"
         fi
 
     - name: Run chart-testing (lint)
       if: steps.list-changed.outputs.changed == 'true'
-      run: ct lint --charts-dir . --target-branch ${{ github.event.repository.default_branch }}
+      run: ct lint --chart-dirs . --target-branch ${{ github.event.repository.default_branch }}
 
     - name: Create kind cluster
       if: steps.list-changed.outputs.changed == 'true'
@@ -50,7 +50,7 @@ jobs:
 
     - name: Run chart-testing (install)
       if: steps.list-changed.outputs.changed == 'true'
-      run: ct install --charts-dir . --target-branch ${{ github.event.repository.default_branch }}
+      run: ct install --chart-dirs . --target-branch ${{ github.event.repository.default_branch }}
 
   release:
     name: Release Charts
