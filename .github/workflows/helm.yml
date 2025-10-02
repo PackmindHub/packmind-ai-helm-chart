@@ -35,14 +35,14 @@ jobs:
     - name: Run chart-testing (list-changed)
       id: list-changed
       run: |
-        changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
+        changed=$(ct list-changed --charts-dir . --target-branch ${{ github.event.repository.default_branch }})
         if [[ -n "$changed" ]]; then
           echo "changed=true" >> "$GITHUB_OUTPUT"
         fi
 
     - name: Run chart-testing (lint)
       if: steps.list-changed.outputs.changed == 'true'
-      run: ct lint --target-branch ${{ github.event.repository.default_branch }}
+      run: ct lint --charts-dir . --target-branch ${{ github.event.repository.default_branch }}
 
     - name: Create kind cluster
       if: steps.list-changed.outputs.changed == 'true'
@@ -50,7 +50,7 @@ jobs:
 
     - name: Run chart-testing (install)
       if: steps.list-changed.outputs.changed == 'true'
-      run: ct install --target-branch ${{ github.event.repository.default_branch }}
+      run: ct install --charts-dir . --target-branch ${{ github.event.repository.default_branch }}
 
   release:
     name: Release Charts
@@ -92,16 +92,16 @@ jobs:
         echo "Updating Chart.yaml version to ${VERSION}"
         
         # Update the version in Chart.yaml
-        sed -i "s/^version: .*/version: ${VERSION}/" Chart.yaml
+        sed -i "s/^version: .*/version: ${VERSION}/" packmind/Chart.yaml
         
         # Update appVersion to match (optional)
-        sed -i "s/^appVersion: .*/appVersion: \"${VERSION}\"/" Chart.yaml
+        sed -i "s/^appVersion: .*/appVersion: \"${VERSION}\"/" packmind/Chart.yaml
         
         echo "Updated Chart.yaml:"
-        cat Chart.yaml
+        cat packmind/Chart.yaml
 
     - name: Run chart-releaser
-      uses: helm/chart-releaser-action@v1.6.0
+      uses: helm/chart-releaser-action@v1.7.0
       with:
         charts_dir: .
       env:
