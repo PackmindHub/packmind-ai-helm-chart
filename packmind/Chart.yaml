@@ -6,7 +6,7 @@ version: 0.6.0
 appVersion: 1.2.0
 home: https://packmind.com
 sources:
-  -  https://github.com/PackmindHub/packmind-ai-helm-chart
+  - https://github.com/PackmindHub/packmind-ai-helm-chart
 keywords:
   - ai
   - coding
@@ -16,3 +16,4 @@ maintainers:
     email: support@packmind.com
 annotations:
   category: Software Development
+ 
