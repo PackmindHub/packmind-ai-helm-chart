@@ -115,10 +115,6 @@ Override environment variables for the API service:
 api:
   env:
     APP_WEB_URL: "https://local.packmind.acme"
-    NODE_ENV: "production"
-    COOKIE_SECURE: "true"
-    DATABASE_POOL_SIZE: "10"
-    LOG_LEVEL: "info"
 ```
 
 ### MCP Server Environment Variables
@@ -129,8 +125,6 @@ Override environment variables for the MCP server:
 mcpServer:
   env:
     APP_WEB_URL: "https://local.packmind.acme"
-    RATE_LIMIT_MAX_REQUESTS: "10000"
-    MCP_TIMEOUT: "30000"
 ```
 
 ### Using External Secrets for Environment Variables
@@ -191,9 +185,8 @@ ingress:
 ### Internal Databases
 
 When using internal PostgreSQL and Redis, ensure regular backups of:
-- `packmind-postgresql-data` PVC (default: 2Gi)
-- `packmind-redis-data` PVC (default: 8Gi)
-- `packmind-api-secrets` (contains encryption key)
+- `packmind-postgresql-data` PVC 
+- `packmind-redis-data` PVC
 
 ### External Databases
 
