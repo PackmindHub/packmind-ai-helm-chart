@@ -200,6 +200,7 @@ Backups are managed by your external database provider.
 secrets:
   api:
     jwtSecretKey: "your-api-jwt-secret"
+    openaiApiKey: "your-openai-api-key-here"
   mcp:
     jwtSecretKey: "your-mcp-jwt-secret"
 ```
@@ -220,4 +221,22 @@ kubectl create secret docker-registry packmind-registry-secret \
   --docker-username=user \
   --docker-password=password \
   --docker-email=email@example.com
+```
+
+To inject an OpenAI API Key, you'll have to create the secret first
+
+```bash
+kubectl create secret generic my-openai-secret \
+  --from-literal=open-ai-key="your-openai-api-key-here"
+```
+
+And then include in your `values.yaml`:
+
+```yaml
+api:
+  secretEnvVars:
+    - name: OPEN_AI_KEY
+      secretName: my-openai-secret
+      key: open-ai-key
+      optional: false
 ```
