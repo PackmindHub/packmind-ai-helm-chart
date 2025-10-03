@@ -1,5 +1,7 @@
 # Packmind Helm Chart - Deployment Guide
 
+Packmind documentation is available [here](https://packmindhub.github.io/packmind/).
+
 ## Table of Contents
 
 - [Quick Start](#quick-start)
@@ -106,6 +108,8 @@ kubectl create secret generic packmind-db-secret \
 ✅ **Recommended for production**
 
 ## Environment Variables
+
+All the environment variables are available [here](https://packmindhub.github.io/packmind/gs-install-self-hosted#configure-deployment-and-environment-variables).
 
 ### API Service Environment Variables
 
