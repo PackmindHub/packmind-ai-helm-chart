@@ -25,7 +25,7 @@ helm repo update
 Deploy Packmind with default settings (internal PostgreSQL and Redis):
 
 ```bash
-helm install packmind packmind/packmind
+helm install packmind-ai packmind-ai/packmind-ai
 ```
 
 Or install from local chart directory:
