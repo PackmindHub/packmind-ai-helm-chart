@@ -83,7 +83,7 @@ dockerRegistry:
   # Set to true to create a docker-registry secret
   enabled: true
   # Registry configuration
-  registry: "" # e.g., "registry.example.com" or "docker.io"
+  registry: ""  # e.g., "registry.example.com" or "docker.io"
   username: ""
   password: ""
   email: ""
@@ -541,7 +541,7 @@ ingress:
       maxAge: 86400
 
     # Custom backend protocol (for GRPC, HTTP2, etc.)
-    backendProtocol: "HTTP" # Options: HTTP, HTTPS, GRPC, HTTP2
+    backendProtocol: "HTTP"  # Options: HTTP, HTTPS, GRPC, HTTP2
 
 # PostgreSQL configuration
 postgresql:
