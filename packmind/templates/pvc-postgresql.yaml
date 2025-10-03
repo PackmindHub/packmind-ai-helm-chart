@@ -7,8 +7,9 @@ metadata:
     {{- include "packmind.labels" . | nindent 4 }}
     app.kubernetes.io/component: postgresql
   annotations:
-    # Skip resource management for existing PVCs to avoid immutability conflicts
-    "helm.sh/resource-policy": "keep"
+    {{- if .Values.postgresql.persistence.resourcePolicy }}
+    "helm.sh/resource-policy": {{ .Values.postgresql.persistence.resourcePolicy | quote }}
+    {{- end }}
     {{- with (include "packmind.annotations" .) }}
     {{- if . }}
     {{- . | nindent 4 }}

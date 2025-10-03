@@ -582,6 +582,11 @@ postgresql:
     # Leave empty to use default storage class
     storageClass: ""
 
+    # Helm resource policy for PVC management
+    # Set to "keep" to preserve existing PVCs during upgrades (prevents immutability errors)
+    # Set to "" to allow normal Helm management
+    resourcePolicy: ""
+
     # Advanced PVC configuration
     # Storage resource limits (optional)
     limits: {}
@@ -657,6 +662,11 @@ redis:
     # Storage class for Redis PVC
     # Leave empty to use default storage class
     storageClass: ""
+
+    # Helm resource policy for PVC management
+    # Set to "keep" to preserve existing PVCs during upgrades (prevents immutability errors)
+    # Set to "" to allow normal Helm management
+    resourcePolicy: ""
 
     # Advanced PVC configuration
     # Storage resource limits (optional)
