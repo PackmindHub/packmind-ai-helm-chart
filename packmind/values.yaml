@@ -177,7 +177,7 @@ api:
       path: /api/v0/healthcheck
       port: 3000
     initialDelaySeconds: 30
-    periodSeconds: 10
+    periodSeconds: 20
     timeoutSeconds: 5
     failureThreshold: 3
 
@@ -281,7 +281,7 @@ frontend:
       path: /
       port: 8080
     initialDelaySeconds: 30
-    periodSeconds: 10
+    periodSeconds: 20
     timeoutSeconds: 5
     failureThreshold: 3
 
@@ -361,7 +361,7 @@ mcpServer:
       path: /mcp/healthcheck
       port: 3001
     initialDelaySeconds: 30
-    periodSeconds: 10
+    periodSeconds: 20
     timeoutSeconds: 5
     failureThreshold: 3
 
@@ -371,7 +371,7 @@ mcpServer:
       port: 3001
     initialDelaySeconds: 15
     periodSeconds: 5
-    timeoutSeconds: 3
+    timeoutSeconds: 5
     failureThreshold: 3
 
   # Environment variables
