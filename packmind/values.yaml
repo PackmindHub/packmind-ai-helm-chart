@@ -152,7 +152,7 @@ api:
   image:
     repository: packmind/api
     pullPolicy: IfNotPresent
-    tag: "1.2.1"
+    tag: "1.3.0"
 
   replicaCount: 1
 
@@ -256,7 +256,7 @@ frontend:
   image:
     repository: packmind/frontend
     pullPolicy: IfNotPresent
-    tag: "1.2.1"
+    tag: "1.3.0"
 
   replicaCount: 1
 
@@ -336,7 +336,7 @@ mcpServer:
   image:
     repository: packmind/mcp
     pullPolicy: Always
-    tag: "1.2.1"
+    tag: "1.3.0"
 
   replicaCount: 1
 
