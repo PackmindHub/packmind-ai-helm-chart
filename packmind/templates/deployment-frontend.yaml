@@ -51,6 +51,19 @@ spec:
           env:
             - name: NGINX_ENV
               value: "K8S"
+            - name: INGRESS_ENABLED
+              value: {{ .Values.ingress.enabled | quote }}
+            {{- if not .Values.ingress.enabled }}
+            # Service discovery for no-ingress mode (nginx proxies to backend services)
+            - name: API_SERVICE_HOST
+              value: "{{ include "packmind.fullname" . }}-api"
+            - name: API_SERVICE_PORT
+              value: {{ .Values.api.service.port | quote }}
+            - name: MCP_SERVICE_HOST
+              value: "{{ include "packmind.fullname" . }}-mcp-server"
+            - name: MCP_SERVICE_PORT
+              value: {{ .Values.mcpServer.service.port | quote }}
+            {{- end }}
             {{- include "packmind.allEnvVars" (dict "component" "frontend" "context" .) | nindent 12 }}
           {{- with .Values.frontend.livenessProbe }}
           livenessProbe:
