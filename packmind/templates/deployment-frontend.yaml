@@ -42,7 +42,7 @@ spec:
       containers:
         - name: frontend
           {{- include "packmind.securityContextField" (dict "context" . "component" "frontend") | nindent 10 }}
-          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+          image: "{{ .Values.frontend.image.repository }}:{{ include "packmind.imageTag" (dict "tag" .Values.frontend.image.tag "context" .) }}"
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           ports:
             - name: http

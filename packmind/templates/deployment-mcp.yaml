@@ -42,7 +42,7 @@ spec:
       containers:
         - name: mcp-server
           {{- include "packmind.securityContextField" (dict "context" . "component" "mcpServer") | nindent 10 }}
-          image: "{{ .Values.mcpServer.image.repository }}:{{ .Values.mcpServer.image.tag }}"
+          image: "{{ .Values.mcpServer.image.repository }}:{{ include "packmind.imageTag" (dict "tag" .Values.mcpServer.image.tag "context" .) }}"
           imagePullPolicy: {{ .Values.mcpServer.image.pullPolicy }}
           ports:
             - name: http

@@ -42,7 +42,7 @@ spec:
       containers:
         - name: api
           {{- include "packmind.securityContextField" (dict "context" . "component" "api") | nindent 10 }}
-          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          image: "{{ .Values.api.image.repository }}:{{ include "packmind.imageTag" (dict "tag" .Values.api.image.tag "context" .) }}"
           imagePullPolicy: {{ .Values.api.image.pullPolicy }}
           ports:
             - name: http

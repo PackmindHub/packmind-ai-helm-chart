@@ -1,5 +1,9 @@
 # Global configuration
 global:
+  # Packmind version: "oss" (default) or "enterprise"
+  # When set to "enterprise", image tags will be suffixed with "-enterprise"
+  version: "oss"
+
   # Labels to be applied to all resources
   labels: {}
     # environment: production

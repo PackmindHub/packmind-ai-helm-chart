@@ -4,6 +4,7 @@ Packmind documentation is available [here](https://packmindhub.github.io/packmin
 
 ## Table of Contents
 
+- [Version Selection](#version-selection)
 - [Quick Start](#quick-start)
 - [Critical: Encryption Key](#critical-encryption-key)
 - [Database Configuration](#database-configuration)
@@ -12,6 +13,31 @@ Packmind documentation is available [here](https://packmindhub.github.io/packmin
 - [Backup Considerations](#backup-considerations)
 - [Additional Secrets](#additional-secrets)
 - [Resource Configuration](#resource-configuration)
+
+## Version Selection
+
+Packmind supports two versions: **OSS** (default) and **Enterprise**.
+
+### OSS Version (Default)
+
+No additional configuration required. Uses standard images:
+- `packmind/api:X.X.X`
+- `packmind/frontend:X.X.X`
+- `packmind/mcp:X.X.X`
+
+### Enterprise Version
+
+Set `global.version` to `enterprise`:
+
+```yaml
+global:
+  version: "enterprise"
+```
+
+This automatically uses enterprise images:
+- `packmind/api:X.X.X-enterprise`
+- `packmind/frontend:X.X.X-enterprise`
+- `packmind/mcp:X.X.X-enterprise`
 
 ## Quick Start
 

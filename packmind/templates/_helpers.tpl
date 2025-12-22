@@ -247,6 +247,19 @@ imagePullSecrets:
 {{- end }}
 
 {{/*
+Image tag helper - appends -enterprise suffix when global.version is enterprise
+*/}}
+{{- define "packmind.imageTag" -}}
+{{- $tag := .tag -}}
+{{- $version := .context.Values.global.version | default "oss" -}}
+{{- if eq $version "enterprise" -}}
+{{- printf "%s-enterprise" $tag -}}
+{{- else -}}
+{{- $tag -}}
+{{- end -}}
+{{- end }}
+
+{{/*
 Security Context - with service-specific override support
 */}}
 {{- define "packmind.securityContext" -}}
