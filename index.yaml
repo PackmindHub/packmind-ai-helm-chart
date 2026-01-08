@@ -27,6 +27,28 @@ entries:
   - annotations:
       category: Software Development
     apiVersion: v2
+    appVersion: 1.7.0
+    created: "2026-01-08T07:36:25.964163944Z"
+    description: Packmind AI - Trust AI Agents at scale
+    digest: 7baf4871483b96c23e3baa9a5659e7f67d12f77b60456cb554faaf15663dc041
+    home: https://packmind.com
+    keywords:
+    - ai
+    - coding
+    - agents
+    maintainers:
+    - email: support@packmind.com
+      name: Packmind Team
+    name: packmind-ai
+    sources:
+    - https://github.com/PackmindHub/packmind-ai-helm-chart
+    type: application
+    urls:
+    - https://github.com/PackmindHub/packmind-ai-helm-chart/releases/download/packmind-ai-1.7.0/packmind-ai-1.7.0.tgz
+    version: 1.7.0
+  - annotations:
+      category: Software Development
+    apiVersion: v2
     appVersion: 0.20.0
     created: "2025-12-22T15:50:33.607500648Z"
     description: Packmind AI - Trust AI Agents at scale
@@ -200,4 +222,4 @@ entries:
     urls:
     - https://github.com/PackmindHub/packmind-ai-helm-chart/releases/download/packmind-ai-0.12.0/packmind-ai-0.12.0.tgz
     version: 0.12.0
-generated: "2025-12-22T15:50:33.607567022Z"
+generated: "2026-01-08T07:36:25.96419971Z"
