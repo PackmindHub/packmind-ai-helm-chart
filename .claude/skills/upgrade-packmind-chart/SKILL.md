@@ -10,7 +10,7 @@ This skill upgrades the Packmind Helm chart to a new version.
 ## Usage
 
 ```
-/upgrade-packmind [version]
+/upgrade-packmind-chart [version]
 ```
 
 Where `[version]` is the new Packmind application version in semver format (e.g., `1.8.0`).
@@ -46,13 +46,29 @@ When this skill is invoked:
    - Show the old and new app version
    - List all updated image tags
 
+8. **Create a git commit**:
+   - Stage the modified files: `packmind/Chart.yaml` and `packmind/values.yaml`
+   - Create a commit with message: `Release <new_chart_version> for Packmind <new_app_version>`
+   - Example: `Release 0.22.0 for Packmind 1.8.0`
+
+9. **Tag the commit**:
+   - Create a git tag with format: `release/<new_chart_version>`
+   - Example: `release/0.22.0`
+
+10. **Push to remote**:
+    - Push the commit to the remote repository
+    - Push the tag to the remote repository
+
 ## Example
 
 ```
-/upgrade-packmind 1.8.0
+/upgrade-packmind-chart 1.8.0
 ```
 
 This will:
 - Update `Chart.yaml` version from `0.21.0` to `0.22.0`
 - Update `Chart.yaml` appVersion from `1.7.0` to `1.8.0`
 - Update all image tags in `values.yaml` from `1.7.0` to `1.8.0`
+- Create a commit: `Release 0.22.0 for Packmind 1.8.0`
+- Tag the commit: `release/0.22.0`
+- Push commit and tag to remote
