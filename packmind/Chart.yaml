@@ -2,7 +2,7 @@ apiVersion: v2
 name: packmind-ai
 description: Packmind AI - Trust AI Agents at scale
 type: application
-version: 1.12.0
+version: 1.11.1
 appVersion: 1.11.1
 home: https://packmind.com
 sources:
