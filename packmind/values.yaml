@@ -339,7 +339,7 @@ mcpServer:
 
   image:
     repository: packmind/mcp
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     tag: "1.13.1"
 
   replicaCount: 1
@@ -564,7 +564,7 @@ postgresql:
   image:
     repository: postgres
     tag: "17.6-alpine3.21"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
 
   auth:
     username: "postgres"
@@ -646,7 +646,7 @@ redis:
   image:
     repository: redis
     tag: "7.2.4-alpine"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
 
   auth:
     enabled: false
