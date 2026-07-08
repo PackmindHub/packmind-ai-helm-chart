@@ -20,16 +20,12 @@ spec:
     - ReadWriteOnce
   # Explicitly specify volume mode for clarity
   volumeMode: Filesystem
-  {{- if or .Values.postgresql.persistence.storageClass (not .Values.postgresql.persistence.storageClass) }}
   {{- if .Values.postgresql.persistence.storageClass }}
   storageClassName: {{ .Values.postgresql.persistence.storageClass | quote }}
   {{- else if .Values.global.storageClass }}
   storageClassName: {{ .Values.global.storageClass | quote }}
-  {{- else }}
-  # Use default storage class if none specified
-  storageClassName: ""
   {{- end }}
-  {{- end }}
+  {{- /* When no storage class is set, storageClassName is omitted so the cluster's default class is used (an explicit "" disables dynamic provisioning). */}}
   resources:
     requests:
       storage: {{ .Values.postgresql.persistence.size | quote }}
