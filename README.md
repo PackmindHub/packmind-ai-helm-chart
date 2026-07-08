@@ -23,7 +23,6 @@ Packmind supports two versions: **OSS** (default) and **Enterprise**.
 No additional configuration required. Uses standard images:
 - `packmind/api:X.X.X`
 - `packmind/frontend:X.X.X`
-- `packmind/mcp:X.X.X`
 
 ### Enterprise Version
 
@@ -37,7 +36,6 @@ global:
 This automatically uses enterprise images:
 - `packmind/api:X.X.X-enterprise`
 - `packmind/frontend:X.X.X-enterprise`
-- `packmind/mcp:X.X.X-enterprise`
 
 ## Quick Start
 
@@ -147,16 +145,6 @@ api:
     APP_WEB_URL: "https://local.packmind.acme"
 ```
 
-### MCP Server Environment Variables
-
-Override environment variables for the MCP server:
-
-```yaml
-mcpServer:
-  env:
-    APP_WEB_URL: "https://local.packmind.acme"
-```
-
 ### Using External Secrets for Environment Variables
 
 For production environments, use `secretEnvVars` to reference secrets managed by external systems (Vault, External Secrets Operator, etc.):
@@ -172,13 +160,6 @@ api:
       secretName: external-service-secret
       key: token
       optional: true
-
-mcpServer:
-  secretEnvVars:
-    - name: MCP_EXTERNAL_TOKEN
-      secretName: vault-mcp-secret
-      key: external-token
-      optional: false
 ```
 
 ## Ingress Configuration
@@ -208,7 +189,7 @@ ingress:
 - NGINX Ingress Controller installed
 - cert-manager installed with Let's Encrypt ClusterIssuer configured
 
-**Routes:** `/api` → API, `/mcp` → MCP Server, `/` → Frontend
+**Routes:** `/api` → API, `/` → Frontend
 
 ## Backup Considerations
 
@@ -231,8 +212,6 @@ secrets:
   api:
     jwtSecretKey: "your-api-jwt-secret"
     openaiApiKey: "your-openai-api-key-here"
-  mcp:
-    jwtSecretKey: "your-mcp-jwt-secret"
 ```
 
 ### Private Docker Registry

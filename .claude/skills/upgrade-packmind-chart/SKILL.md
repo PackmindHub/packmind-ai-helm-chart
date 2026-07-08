@@ -39,7 +39,6 @@ When this skill is invoked:
 6. **Update `packmind/values.yaml`**:
    - Update `api.image.tag` to the provided version
    - Update `frontend.image.tag` to the provided version
-   - Update `mcpServer.image.tag` to the provided version
 
 7. **Report the changes**:
    - Show the old and new chart version
