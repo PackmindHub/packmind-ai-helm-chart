@@ -26,7 +26,9 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.x'
+        # Pin to 3.11: chart-testing's bundled yamale uses ast.Num,
+        # removed in Python 3.12+ (CI otherwise grabs the latest 3.x and crashes).
+        python-version: '3.11'
         check-latest: true
 
     - name: Set up chart-testing
