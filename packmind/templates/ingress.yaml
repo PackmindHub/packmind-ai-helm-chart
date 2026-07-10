@@ -2,7 +2,6 @@
 {{- $fullName := include "packmind.fullname" . -}}
 {{- $frontendSvc := printf "%s-frontend" $fullName -}}
 {{- $apiSvc := printf "%s-api" $fullName -}}
-{{- $mcpSvc := printf "%s-mcp-server" $fullName -}}
 {{- if and .Values.ingress.className (not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class")) }}
   {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
 {{- end }}
@@ -65,12 +64,12 @@ spec:
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ if eq .backend.service "frontend" }}{{ $frontendSvc }}{{ else if eq .backend.service "api" }}{{ $apiSvc }}{{ else if eq .backend.service "mcp-server" }}{{ $mcpSvc }}{{ else }}{{ .backend.service }}{{ end }}
+                name: {{ if eq .backend.service "frontend" }}{{ $frontendSvc }}{{ else if eq .backend.service "api" }}{{ $apiSvc }}{{ else }}{{ .backend.service }}{{ end }}
                 port:
-                  number: {{ if eq .backend.service "frontend" }}{{ $.Values.frontend.service.port }}{{ else if eq .backend.service "api" }}{{ $.Values.api.service.port }}{{ else if eq .backend.service "mcp-server" }}{{ $.Values.mcpServer.service.port }}{{ else }}80{{ end }}
+                  number: {{ if eq .backend.service "frontend" }}{{ $.Values.frontend.service.port }}{{ else if eq .backend.service "api" }}{{ $.Values.api.service.port }}{{ else }}80{{ end }}
               {{- else }}
-              serviceName: {{ if eq .backend.service "frontend" }}{{ $frontendSvc }}{{ else if eq .backend.service "api" }}{{ $apiSvc }}{{ else if eq .backend.service "mcp-server" }}{{ $mcpSvc }}{{ else }}{{ .backend.service }}{{ end }}
-              servicePort: {{ if eq .backend.service "frontend" }}{{ $.Values.frontend.service.port }}{{ else if eq .backend.service "api" }}{{ $.Values.api.service.port }}{{ else if eq .backend.service "mcp-server" }}{{ $.Values.mcpServer.service.port }}{{ else }}80{{ end }}
+              serviceName: {{ if eq .backend.service "frontend" }}{{ $frontendSvc }}{{ else if eq .backend.service "api" }}{{ $apiSvc }}{{ else }}{{ .backend.service }}{{ end }}
+              servicePort: {{ if eq .backend.service "frontend" }}{{ $.Values.frontend.service.port }}{{ else if eq .backend.service "api" }}{{ $.Values.api.service.port }}{{ else }}80{{ end }}
               {{- end }}
             {{- end }}
           {{- else }}
@@ -88,20 +87,6 @@ spec:
               {{- else }}
               serviceName: {{ $apiSvc }}
               servicePort: {{ $.Values.api.service.port }}
-              {{- end }}
-          - path: /mcp
-            {{- if semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion }}
-            pathType: Prefix
-            {{- end }}
-            backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
-              service:
-                name: {{ $mcpSvc }}
-                port:
-                  number: {{ $.Values.mcpServer.service.port }}
-              {{- else }}
-              serviceName: {{ $mcpSvc }}
-              servicePort: {{ $.Values.mcpServer.service.port }}
               {{- end }}
           # Frontend must be last for catch-all routing
           - path: /
@@ -124,7 +109,7 @@ spec:
     - host: {{ .Values.ingress.defaultHost | default "packmind.local" }}
       http:
         paths:
-          # API and MCP routes should be matched first for proper routing
+          # API route should be matched first for proper routing
           - path: /api
             {{- if semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion }}
             pathType: Prefix
@@ -138,20 +123,6 @@ spec:
               {{- else }}
               serviceName: {{ $apiSvc }}
               servicePort: {{ .Values.api.service.port }}
-              {{- end }}
-          - path: /mcp
-            {{- if semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion }}
-            pathType: Prefix
-            {{- end }}
-            backend:
-              {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion }}
-              service:
-                name: {{ $mcpSvc }}
-                port:
-                  number: {{ .Values.mcpServer.service.port }}
-              {{- else }}
-              serviceName: {{ $mcpSvc }}
-              servicePort: {{ .Values.mcpServer.service.port }}
               {{- end }}
           # Frontend catch-all route must be last
           - path: /

@@ -113,25 +113,6 @@ app.kubernetes.io/component: frontend
 {{- end }}
 
 {{/*
-MCP Server specific labels
-*/}}
-{{- define "packmind.mcpServer.labels" -}}
-{{ include "packmind.labels" . }}
-app.kubernetes.io/component: mcp-server
-{{- with .Values.mcpServer.podLabels }}
-{{ toYaml . }}
-{{- end }}
-{{- end }}
-
-{{/*
-MCP Server selector labels
-*/}}
-{{- define "packmind.mcpServer.selectorLabels" -}}
-{{ include "packmind.selectorLabels" . }}
-app.kubernetes.io/component: mcp-server
-{{- end }}
-
-{{/*
 Redis specific labels
 */}}
 {{- define "packmind.redis.labels" -}}
@@ -321,7 +302,7 @@ securityContext:
 
 
 {{/*
-Backend services environment variables (API and MCP only)
+Backend services environment variables (API only)
 */}}
 {{- define "packmind.backendEnvVars" -}}
 {{- if .Values.postgresql.enabled }}
@@ -381,29 +362,6 @@ Secret environment variables helper
       key: openai-api-key
       optional: true
 {{- end }}
-{{- else if eq $component "mcpServer" }}
-{{- if or $context.Values.secrets.mcp.jwtSecretKey $context.Values.secrets.existing.mcpSecret }}
-- name: MCP_JWT_SECRET_KEY
-  valueFrom:
-    secretKeyRef:
-      name: {{ $context.Values.secrets.existing.mcpSecret | default (printf "%s-mcp-secrets" (include "packmind.fullname" $context)) }}
-      key: mcp-jwt-secret-key
-{{- end }}
-{{- if or $context.Values.secrets.encryptionKeyGeneration $context.Values.secrets.existing.apiSecret }}
-- name: ENCRYPTION_KEY
-  valueFrom:
-    secretKeyRef:
-      name: {{ $context.Values.secrets.existing.apiSecret | default (printf "%s-api-secrets" (include "packmind.fullname" $context)) }}
-      key: encryption-key
-{{- end }}
-{{- if or $context.Values.secrets.api.openaiApiKey $context.Values.secrets.existing.apiSecret }}
-- name: OPENAI_API_KEY
-  valueFrom:
-    secretKeyRef:
-      name: {{ $context.Values.secrets.existing.apiSecret | default (printf "%s-api-secrets" (include "packmind.fullname" $context)) }}
-      key: openai-api-key
-      optional: true
-{{- end }}
 {{- end }}
 {{- end }}
 
@@ -447,7 +405,7 @@ Complete environment variables for a service
 */}}
 {{- define "packmind.allEnvVars" -}}
 {{- $component := .component -}}
-{{- if or (eq $component "api") (eq $component "mcpServer") }}
+{{- if eq $component "api" }}
 {{- include "packmind.backendEnvVars" .context }}
 {{- include "packmind.secretEnvVars" . }}
 {{- include "packmind.dynamicSecretEnvVars" . }}
@@ -479,7 +437,7 @@ Service-specific volume mounts
 {{- $component := .component -}}
 {{- $context := .context -}}
 {{- $serviceValues := index $context.Values $component -}}
-{{- if and (or (eq $component "api") (eq $component "mcpServer")) $serviceValues.caCerts.enabled }}
+{{- if and (eq $component "api") $serviceValues.caCerts.enabled }}
 - name: ca-certs
   mountPath: /ca-certs
   readOnly: true
@@ -500,7 +458,7 @@ Service-specific volumes
 {{- $component := .component -}}
 {{- $context := .context -}}
 {{- $serviceValues := index $context.Values $component -}}
-{{- if and (or (eq $component "api") (eq $component "mcpServer")) $serviceValues.caCerts.enabled }}
+{{- if and (eq $component "api") $serviceValues.caCerts.enabled }}
 - name: ca-certs
   secret:
     secretName: {{ $serviceValues.caCerts.secret.name }}
