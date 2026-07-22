@@ -13,6 +13,7 @@ Packmind documentation is available [here](https://packmindhub.github.io/packmin
 - [Backup Considerations](#backup-considerations)
 - [Additional Secrets](#additional-secrets)
 - [Resource Configuration](#resource-configuration)
+- [DNS Configuration (Self-Hosted Kubernetes)](#dns-configuration-self-hosted-kubernetes)
 
 ## Version Selection
 
@@ -249,3 +250,31 @@ api:
       key: open-ai-key
       optional: false
 ```
+
+## DNS Configuration (Self-Hosted Kubernetes)
+
+The API image is Alpine-based (musl libc). Under Kubernetes' default pod DNS
+(`options ndots:5` plus cluster/corporate `search` domains), musl can fail to
+resolve external hosts such as `api.github.com`, producing
+`getaddrinfo ENOTFOUND` and breaking GitHub App registration. This happens
+because musl aborts the search-domain list on the first non-`NXDOMAIN` reply
+instead of falling back to the absolute name.
+
+If you hit this, set `ndots:"1"` on the API pod so names with at least one dot
+resolve as absolute first:
+
+```yaml
+api:
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
+```
+
+Kubernetes merges these options onto the pod's default `resolv.conf`, so
+`dnsPolicy` does not need to change. `api.dnsPolicy` is also exposed if you
+need to override it (e.g. `"None"`, `"Default"`, `"ClusterFirst"`). Both keys
+are empty by default, so nothing is rendered unless you opt in.
+
+See [PackmindHub/packmind#388](https://github.com/PackmindHub/packmind/issues/388)
+for details.
