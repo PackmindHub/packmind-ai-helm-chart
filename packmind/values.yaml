@@ -148,7 +148,7 @@ api:
   image:
     repository: packmind/api
     pullPolicy: IfNotPresent
-    tag: "1.16.2"
+    tag: "1.17.0"
 
   replicaCount: 1
 
@@ -265,7 +265,7 @@ frontend:
   image:
     repository: packmind/frontend
     pullPolicy: IfNotPresent
-    tag: "1.16.2"
+    tag: "1.17.0"
 
   replicaCount: 1
 
